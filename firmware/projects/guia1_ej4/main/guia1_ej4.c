@@ -2,22 +2,38 @@
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
+ /*! @file display_driver.c
+ *  @brief Driver para el uso del display numérico de 3 dígitos en la placa EDU-ESP.
  *
- * <a href="https://drive.google.com/...">Operation Example</a>
+ *  Este archivo implementa las funciones necesarias para mostrar números en un display
+ *  de 7 segmentos a través de conversores BCD a 7 segmentos.  
+ *  Utiliza 4 líneas BCD (GPIO_20..23) y 3 líneas de selección/latch para cada dígito (GPIO_19, GPIO_18 y GPIO_9).  
+ *
+ *  El driver convierte un número de hasta 3 dígitos en formato decimal, lo traduce a BCD
+ *  y lo envía al hardware correspondiente. Cada dígito se activa mediante un pulso en
+ *  la línea de selección, que provoca el almacenamiento ("latch") de los datos en el
+ *  CD4543.
+ * 
  *
  * @section hardConn Hardware Connection
- *
- * |    Peripheral  |   ESP32   	|
- * |:--------------:|:--------------|
- * | 	PIN_X	 	| 	GPIO_X		|
- *
+ * |   Display      |   EDU-CIAA	|
+ * |:--------------:|:-------------:|
+ * | 	Vcc 	    |	5V      	|
+ * | 	BCD1		| 	GPIO_20		|
+ * | 	BCD2	 	| 	GPIO_21		|
+ * | 	BCD3	 	| 	GPIO_22		|
+ * | 	BCD4	 	| 	GPIO_23		|
+ * | 	SEL1	 	| 	GPIO_19		|
+ * | 	SEL2	 	| 	GPIO_18		|
+ * | 	SEL3	 	| 	GPIO_9		|
+ * | 	Gnd 	    | 	GND     	|
+ * 
  *
  * @section changelog Changelog
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 12/09/2023 | Document creation		                         |
+ * | 1/09/2025 | Document creation		                         |
  *
  * @author Anahí Chaves (natalia.chaves@ingenieria.uner.edu.ar)
  *
@@ -40,6 +56,15 @@ typedef struct
 
 /*==================[internal functions declaration]=========================*/
 
+/**
+ * @brief Convierte un número entero en un arreglo de dígitos decimales (BCD).
+ *
+ * @param[in] data Número entero de entrada (hasta 32 bits).
+ * @param[in] digits Cantidad de dígitos a extraer.
+ * @param[out] bcd_number Puntero a un arreglo donde se guardan los dígitos. *                        bcd_number[0] contiene el dígito más significativo.
+ *
+ * @return 0 si tuvo éxito, -1 en caso de error.
+ */
 int8_t convertToBcdArray(uint32_t data, uint8_t digits, uint8_t *bcd_number) {
     // Rellenar todo con ceros primero
     for (uint8_t i = 0; i < digits; i++) {
@@ -55,6 +80,14 @@ int8_t convertToBcdArray(uint32_t data, uint8_t digits, uint8_t *bcd_number) {
     return 0; // éxito
 }
 
+/**
+ * @brief Escribe un dígito BCD en los GPIOs correspondientes.
+ *
+ * @param[in] bcd_digit Dígito BCD (0-9) a escribir.
+ * @param[in] map Puntero a un arreglo de estructuras que mapean los bits BCD a los GPIOs.
+ *     map[0] corresponde al bit menos significativo (b0).
+ *     map[3] corresponde al bit más significativo (b3).
+ */
 void writeBcdToGpio(uint8_t bcd_digit, gpioConf_t * map) {
     for (int i = 0; i < 4; i++) {
         uint8_t bit = (bcd_digit >> i) & 0x01;   // extraigo bit i del dígito
@@ -64,6 +97,17 @@ void writeBcdToGpio(uint8_t bcd_digit, gpioConf_t * map) {
             GPIOOff(map[i].pin);  // pongo el GPIO en ‘0’
     }
 }
+/**
+ * @brief Muestra un número completo en el display de 3 dígitos.
+ *
+ * Convierte el número a BCD, lo escribe en las líneas correspondientes y activa
+ * cada dígito mediante su pin de selección.
+ * 
+ * @param[in] number Número a mostrar (0-999).
+ * @param[in] digits Cantidad de dígitos del display (3 en este caso).
+ * @param[in] bcd_map Puntero a un arreglo de estructuras que mapean los bits BCD a los GPIOs.
+ * @param[in] digit_map Puntero a un arreglo de estructuras que mapean los dígitos del display a los GPIOs.
+ */
 
 void displayNumber(uint32_t number, uint8_t digits, gpioConf_t * bcd_map, gpioConf_t * digit_map) {
     uint8_t bcd[digits];
@@ -83,6 +127,12 @@ void displayNumber(uint32_t number, uint8_t digits, gpioConf_t * bcd_map, gpioCo
 
 
 /*==================[external functions definition]==========================*/
+/**
+ * @brief Función principal de la aplicación.
+ *
+ */
+
+
 void app_main(void){
 	
 	// uint8_t bcd[6];
