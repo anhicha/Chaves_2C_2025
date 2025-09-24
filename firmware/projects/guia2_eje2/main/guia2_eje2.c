@@ -1,10 +1,9 @@
-/*! @mainpage Template
+/*! @mainpage Medidor de distancia por ultrasonido con interrupciones
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
- *
- * <a href="https://drive.google.com/...">Operation Example</a>
+ * Este programa mide distancia con un sensor HC-SR04 y muestra el resultado en un LCD
+ * y con LEDs, utilizando interrupciones para teclas y temporizador.
  *
  * @section hardConn Hardware Connection
  *
@@ -17,7 +16,7 @@
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 10/09/2025 | Document creation		                         |
+ * | 24/09/2025 | Document creation		                         |
  *
  * @author Anahí Chaves (natalia.chaves@ingenieria.uner.edu.ar)
  *
@@ -33,14 +32,15 @@
 #include "hc_sr04.h"
 #include "lcditse0803.h"
 #include "switch.h"
+#include "timer_mcu.h"
+#include "gpio_mcu.h"
 
 /*==================[macros and definitions]=================================*/
-#define CONFIG_BLINK_PERIOD 1000
+#define REFRESH_PERIOD_US 1000000 // 1 s
 
 /*==================[internal data definition]===============================*/
 TaskHandle_t MedirDistancia_task_handle = NULL;
 TaskHandle_t ControlarLed_task_handle = NULL;
-TaskHandle_t Teclas_task_handle = NULL;
 TaskHandle_t Display_task_handle = NULL;
 
 volatile bool activar_medicion = false; // booleano para activar la medicion
@@ -49,23 +49,21 @@ volatile uint16_t distancia_actual = 0; // ditancia medida en cm
 
 /*==================[internal functions declaration]=========================*/
 
-static void Teclas(void *pvParameter)
+
+/**
+ * @brief ISR para TEC1: alterna el estado de medición
+ */
+void Tecla1(void *param)
 {
-    uint8_t teclas;
-    while (true)
-    {
-        teclas = SwitchesRead();
-        switch (teclas)
-        {
-        case SWITCH_1:
-            activar_medicion = !activar_medicion; // cambio el estado de activar med
-            break;
-        case SWITCH_2:
-            hold = !hold; // cambio el estado de hold
-            break;
-        }
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
-    }
+	activar_medicion = !activar_medicion; // cambio el estado de activar med
+}
+
+/**
+ * @brief ISR para TEC2: alterna el modo HOLD
+ */
+void Tecla2(void *param)
+{
+	hold = !hold; // cambio el estado de hold
 }
 
 static void MedirDistancia(void *pvParameter)
@@ -78,8 +76,7 @@ static void MedirDistancia(void *pvParameter)
             distancia_actual = HcSr04ReadDistanceInCentimeters();
           //  printf("Distancia: %d cm\r\n", distancia_actual);
         }
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
-    }
+           }
 }
 
 static void ControlarLed(void *pvParameter)
@@ -115,7 +112,6 @@ static void ControlarLed(void *pvParameter)
                 LedOn(LED_3);
             }
         }
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
     }
 }
 static void Display(void *pvParameter)
@@ -134,16 +130,15 @@ static void Display(void *pvParameter)
             } // si se activa hold mantengo el ultimo valor en el
         }
 
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
     }
 }
 /*==================[external functions definition]==========================*/
 void app_main(void)
 { // Inicializaciones
     LedsInit();
-    SwitchesInit();
     LcdItsE0803Init();
     HcSr04Init(GPIO_3, GPIO_2);
+	
     
     // crear tareas
     xTaskCreate(&MedirDistancia, "Medir Distancia", 512, NULL, 5, &MedirDistancia_task_handle);
