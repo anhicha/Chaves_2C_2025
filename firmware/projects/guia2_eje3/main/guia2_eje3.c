@@ -1,9 +1,9 @@
-/*! @mainpage Medidor de distancia por ultrasonido con interrupciones
+/*! @mainpage Medidor de distancia por ultrasonido con interrupciones y puerto serie
  *
  * @section genDesc General Description
  *
  * Este programa mide distancia con un sensor HC-SR04 y muestra el resultado en un LCD
- * y con LEDs, utilizando interrupciones para teclas y temporizador.
+ * y con LEDs, utilizando interrupciones para teclas ,temporizador y comunicación serie UART.
  *
  * @section hardConn Hardware Connection
  *
@@ -16,7 +16,7 @@
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 24/09/2025 | Document creation		                         |
+ * | 01/10/2025 | Document creation		                         |
  *
  * @author Anahí Chaves (natalia.chaves@ingenieria.uner.edu.ar)
  *
@@ -34,6 +34,7 @@
 #include "switch.h"
 #include "timer_mcu.h"
 #include "gpio_mcu.h"
+#include "uart_mcu.h"
 
 /*==================[macros and definitions]=================================*/
 #define MEDICION_PERIOD_US 1000000 // 1 s
@@ -42,6 +43,7 @@
 TaskHandle_t MedirDistancia_task_handle = NULL;
 TaskHandle_t ControlarLed_task_handle = NULL;
 TaskHandle_t Display_task_handle = NULL;
+TaskHandle_t Uart_task_handle = NULL;
 
 volatile bool activar_medicion = false; // booleano para activar la medicion
 volatile bool hold = false;             // booleano para mantener el ultimo valor
@@ -65,24 +67,38 @@ void Tecla2(void *param)
     hold = !hold; // cambio el estado de hold
 }
 
-
 /**
- * @brief Interrupción del timer cada 1 s para despertar tarea de medición
+ * @brief Interrupción del timer cada 1 s para despertar tareas
  */
 void FuncTimer(void *param)
 {
     vTaskNotifyGiveFromISR(MedirDistancia_task_handle, pdFALSE); // notifica a la tarea de medicion
-    vTaskNotifyGiveFromISR(ControlarLed_task_handle, pdFALSE); // notifica a la tarea de control led
-    vTaskNotifyGiveFromISR(Display_task_handle, pdFALSE); // notifica a la tarea de display
-
+    vTaskNotifyGiveFromISR(ControlarLed_task_handle, pdFALSE);   // notifica a la tarea de control led
+    vTaskNotifyGiveFromISR(Display_task_handle, pdFALSE);        // notifica a la tarea de display
 }
 
+void FuncUart(void *param)
+{
+    uint8_t dato;
+    if (UartReadByte(UART_PC, &dato)) // leo dato recibido
+    {
+        if (dato == 'O') // si es 'm' activo/desactivo medicion
+        {
+            activar_medicion = !activar_medicion;
+        }
+        else if (dato == 'H') // si es 'h' activo/desactivo hold
+        {
+            hold = !hold;
+        }
+    }
+}
 
 /**
- * @brief Tarea que mide la distancia con el sensor ultrasónico
+ * @brief Tarea que mide la distancia con el sensor ultrasónico y la envía por UART
  */
 static void MedirDistancia(void *pvParameter)
 {
+    char buffer[20];
 
     while (true)
     {
@@ -92,8 +108,10 @@ static void MedirDistancia(void *pvParameter)
         if (activar_medicion)
         { // si activar med esta en true
             distancia_actual = HcSr04ReadDistanceInCentimeters();
-            //  printf("Distancia: %d cm\r\n", distancia_actual);
-        }
+            // envio por uart
+        UartSendString(UART_PC, (char*)UartItoa(distancia_actual, 10));
+        UartSendString(UART_PC, " cm\r\n");
+        } 
     }
 }
 /**
@@ -131,7 +149,7 @@ static void ControlarLed(void *pvParameter)
                 LedOn(LED_2);
                 LedOn(LED_3);
             }
-        } 
+        }
         // Espera a que el timer la despierte cada 1 s
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
     }
@@ -170,6 +188,13 @@ void app_main(void)
 
     SwitchActivInt(SWITCH_1, Tecla1, NULL);
     SwitchActivInt(SWITCH_2, Tecla2, NULL);
+
+    serial_config_t my_uart = {
+        .port = UART_PC,
+        .baud_rate = 9600,
+        .func_p = FuncUart,
+        .param_p = NULL};
+    UartInit(&my_uart);
 
     // config timer
     timer_config_t timer_medicion = {
