@@ -36,8 +36,7 @@
 #include "gpio_mcu.h"
 
 /*==================[macros and definitions]=================================*/
-#define MEDICION_PERIOD_US 1000000 // 1 s
-
+#define MEDICION_PERIOD_US 1000000 // TIEMPO 1 s DEL TIMER
 /*==================[internal data definition]===============================*/
 TaskHandle_t MedirDistancia_task_handle = NULL;
 TaskHandle_t ControlarLed_task_handle = NULL;
@@ -166,12 +165,12 @@ void app_main(void)
     HcSr04Init(GPIO_3, GPIO_2);
     SwitchesInit();
 
-    // config teclas
+    // config interrupciones de teclas
 
     SwitchActivInt(SWITCH_1, Tecla1, NULL);
     SwitchActivInt(SWITCH_2, Tecla2, NULL);
 
-    // config timer
+    // config un timer que dispara cada 1s
     timer_config_t timer_medicion = {
         .timer = TIMER_A,
         .period = MEDICION_PERIOD_US, // 1s
@@ -185,7 +184,7 @@ void app_main(void)
     // xTaskCreate(&Teclas, "Teclas", 512, NULL, 5, &Teclas_task_handle);
     xTaskCreate(&Display, "Display", 512, NULL, 5, &Display_task_handle);
 
-    // iniciar timer
+    // iniciar timer y empieza a funcionar el sistema
     TimerStart(timer_medicion.timer);
 }
 /*==================[end of file]============================================*/

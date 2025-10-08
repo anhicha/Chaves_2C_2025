@@ -13,20 +13,21 @@
 #include "lcditse0803.h"
 #include "gpio_mcu.h"
 /*==================[macros and definitions]=================================*/
-#define GPIO_BCD_1	GPIO_20
+#define GPIO_BCD_1	GPIO_20 //bit menos significativo
 #define GPIO_BCD_2	GPIO_21
 #define GPIO_BCD_3	GPIO_22
-#define GPIO_BCD_4	GPIO_23
-#define GPIO_SEL_1	GPIO_19
-#define GPIO_SEL_2	GPIO_18
-#define GPIO_SEL_3	GPIO_9
+#define GPIO_BCD_4	GPIO_23 //bit mas significativo
+#define GPIO_SEL_1	GPIO_19 //seleccion de digito centenas
+#define GPIO_SEL_2	GPIO_18 //seleccion de digito decenas
+#define GPIO_SEL_3	GPIO_9 //seleccion de digito unidades
 /*==================[internal data definition]===============================*/
 static uint16_t actual_value = 0; /*variable that saves the value to be shown in the display LCD*/
 /*==================[internal functions declaration]=========================*/
 /** @brief Aux function to load a digit to the LCD Display
  *
  */
-bool LcdItsE0803BCDtoPin(uint8_t value){
+bool LcdItsE0803BCDtoPin(uint8_t value){    //recibe un numero 0-9 y lo desarma en 4 bits
+	//escribe cada bit en un pin
 	GPIOState(GPIO_BCD_1, (value & (1<<0))>>0);
 	GPIOState(GPIO_BCD_2, (value & (1<<1))>>1);
 	GPIOState(GPIO_BCD_3, (value & (1<<2))>>2);
@@ -35,13 +36,13 @@ bool LcdItsE0803BCDtoPin(uint8_t value){
 }
 /*==================[external functions definition]==========================*/
 bool LcdItsE0803Init(void){
-	/* Configuration of pins of data*/
+	/* Configuration of pins of data como salida*/
 	GPIOInit(GPIO_BCD_1, GPIO_OUTPUT);
 	GPIOInit(GPIO_BCD_2, GPIO_OUTPUT);
 	GPIOInit(GPIO_BCD_3, GPIO_OUTPUT);
 	GPIOInit(GPIO_BCD_4, GPIO_OUTPUT);
 
-	/* Configuration of pins of control*/
+	/* Configuration of pins of control como salida*/
 	GPIOInit(GPIO_SEL_1, GPIO_OUTPUT);
 	GPIOInit(GPIO_SEL_2, GPIO_OUTPUT);
 	GPIOInit(GPIO_SEL_3, GPIO_OUTPUT);
@@ -63,7 +64,7 @@ bool LcdItsE0803Write(uint16_t value) {
 		/* Write hundreds */
 		LcdItsE0803BCDtoPin(hundreds);
 		GPIOOn(GPIO_SEL_1);
-		GPIOOff(GPIO_SEL_1);
+		GPIOOff(GPIO_SEL_1); //este flanco es el latch, el difito captra el bcd y lo guarda
 
 		/* Write tens */
 		LcdItsE0803BCDtoPin(tens);
@@ -79,11 +80,11 @@ bool LcdItsE0803Write(uint16_t value) {
 	else
 		return false; /* return 0 for values higher than 999 */
 }
-
+//devuelve el ultimo numero que se latcheo
 uint16_t LcdItsE0803Read(void){
 	return (actual_value);
 }
-
+//en muchos drivers bdc 7 segmentos 1111 sinifica en blanco
 void LcdItsE0803Off(void){
 	LcdItsE0803BCDtoPin(0x0F);
 	GPIOOn(GPIO_SEL_1);
@@ -97,7 +98,7 @@ void LcdItsE0803Off(void){
 	GPIOOn(GPIO_SEL_3);
 	GPIOOff(GPIO_SEL_3);
 }
-
+//libera la configuracion de los pines
 bool LcdItsE0803DeInit(void){
 	GPIODeinit();
 	return true;

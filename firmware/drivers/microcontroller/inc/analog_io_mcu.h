@@ -92,7 +92,7 @@ void AnalogStartContinuous(adc_ch_t channel);
  * 
  * @param channel Channel selected
  */
-void AnalogStopContinuous(adc_ch_t channel);
+void AnalogStopContinuous(adc_ch_t channel); 
 
 /**
  * @brief 

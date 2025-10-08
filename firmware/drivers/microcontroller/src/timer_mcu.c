@@ -15,7 +15,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 /*==================[macros and definitions]=================================*/
-#define US_RESOLUTION_HZ	1000000	/*!< 1usec */
+#define US_RESOLUTION_HZ	1000000	/*!< 1usec */ //1 tick = 1 microsegundo
 #define RESET_COUNT_VALUE	0		/*!< Reset timer count to 0 */
 /*==================[internal data declaration]==============================*/
 gptimer_handle_t timer_a = NULL;	/*!< Handle for timer A */	
@@ -32,7 +32,7 @@ const gptimer_config_t timer_config = {
     .direction = GPTIMER_COUNT_UP,		/*!< Count up */
     .resolution_hz = US_RESOLUTION_HZ,	/*!< Resolution in Hz */
 };
-void (*timer_a_isr_p)(void*);	        /*!< Pointer to the ISR function for timer A */	
+void (*timer_a_isr_p)(void*);	        /*!< Pointer to the ISR function  que hicimos nosotros for timer A */	
 void (*timer_b_isr_p)(void*);	        /*!< Pointer to the ISR function for timer B */	
 void (*timer_c_isr_p)(void*);	        /*!< Pointer to the ISR function for timer C */	
 
@@ -46,7 +46,7 @@ gptimer_alarm_config_t alarm_config_b;	/*!< Configuration for alarm B */
 gptimer_alarm_config_t alarm_config_c;	/*!< Configuration for alarm C */
 /*==================[internal functions declaration]=========================*/
 static bool IRAM_ATTR timer_a_isr(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *user_data){
-	timer_a_isr_p(timer_a_user_data);
+	timer_a_isr_p(timer_a_user_data); // llama a la funcion que le pasamos nosotros
 	return true;
 }
 static bool IRAM_ATTR timer_b_isr(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *user_data){
@@ -67,9 +67,9 @@ static bool IRAM_ATTR timer_c_isr(gptimer_handle_t timer, const gptimer_alarm_ev
 void TimerInit(timer_config_t *timer_ini){
 	switch(timer_ini->timer){
 	 	case TIMER_A:
-			timer_a_isr_p = timer_ini->func_p;
-			timer_a_user_data = timer_ini->param_p;
-	 		gptimer_new_timer(&timer_config, &timer_a);
+			timer_a_isr_p = timer_ini->func_p; //guarda que funcion llamar al cumplirse el tiempo
+			timer_a_user_data = timer_ini->param_p; //guarda un puntero con los datos
+	 		gptimer_new_timer(&timer_config, &timer_a); //crea el timer en el harware
 			alarm_config_a.alarm_count = timer_ini->period; 
 			alarm_config_a.reload_count = RESET_COUNT_VALUE;
 			alarm_config_a.flags.auto_reload_on_alarm = true;
@@ -78,7 +78,7 @@ void TimerInit(timer_config_t *timer_ini){
 				.on_alarm = timer_a_isr,
 			};
 			gptimer_register_event_callbacks(timer_a, &alarm_a, NULL);
-			gptimer_enable(timer_a);
+			gptimer_enable(timer_a); //habilita el timer
 	 	break;
 
 	 	case TIMER_B:
@@ -112,7 +112,7 @@ void TimerInit(timer_config_t *timer_ini){
 	 	break;
 	}
 }
-
+//arranca el conteo del timer seleccionado
 void TimerStart(timer_mcu_t timer){
 	switch(timer){
 	 	case TIMER_A:
@@ -126,7 +126,7 @@ void TimerStart(timer_mcu_t timer){
 		break;
 	}
 }
-
+//devuelve el valor actual del conteo del timer seleccionado en misros
 uint32_t TimerRead(timer_mcu_t timer){
 	uint64_t raw_count = 0;
 	switch(timer){
@@ -142,7 +142,7 @@ uint32_t TimerRead(timer_mcu_t timer){
 	}
 	return raw_count;
 }
-
+//detiene el conteo del timer seleccionado
 void TimerStop(timer_mcu_t timer){
 	switch(timer){
 	 	case TIMER_A:
@@ -156,7 +156,7 @@ void TimerStop(timer_mcu_t timer){
 	 	break;
 	}
 }
-
+//pone el contador en 0 sin detener el timer seleccionado
 void TimerReset(timer_mcu_t timer){
 	switch(timer){
 	 	case TIMER_A:
@@ -170,7 +170,7 @@ void TimerReset(timer_mcu_t timer){
 	 	break;
 	}
 }
-
+//cambiar el tiemppo entre interrupciones
 void TimerUpdatePeriod(timer_mcu_t timer, uint32_t period){
 	switch(timer){
 	 	case TIMER_A:

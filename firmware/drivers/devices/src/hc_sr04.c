@@ -36,6 +36,8 @@ bool HcSr04Init(gpio_t echo, gpio_t trigger){
 	trigger_st = trigger;
 
 	/** Configuration of the GPIO pins*/
+	//configura el pin del echo como entrada
+	//configura el pin del trigger como salida
 	GPIOInit(echo, GPIO_INPUT);
 	GPIOInit(trigger, GPIO_OUTPUT);
 
@@ -44,24 +46,26 @@ bool HcSr04Init(gpio_t echo, gpio_t trigger){
 
 uint16_t HcSr04ReadDistanceInCentimeters(void){
 	uint16_t distance = 0, waiting = 0;
-	GPIOOn(trigger_st);
-	DelayUs(10);
-	GPIOOff(trigger_st);
-	while(!GPIORead(echo_st)){
+	GPIOOn(trigger_st); //pone el trigger en alto
+	DelayUs(10); //espera 10us
+	GPIOOff(trigger_st); //pone el trigger en bajo
+	//el sensor envió el sonido y espera a que el pin echo se ponga en alto
+	while(!GPIORead(echo_st)){    //mientras echo sea cero
 		DelayUs(10);
 		waiting += 10;
-		if(waiting > WAIT_MAX){
+		if(waiting > WAIT_MAX){ //espera un tiempo maximo
 			return 0;
 		}
 	}
-	do{
+	do{ // echo en alto (tiempo de viaje del sonido)
 		DelayUs(10);
-		distance += 10;
-		if(distance > MAX_US)
+		distance += 10; //acumula el tiempo que paso en la variable
+		if(distance > MAX_US) //limite de medicion, el objeto esta fuera de rango
 			return MAX_CM;
 	}
 	while(GPIORead(echo_st));
-	return (distance/US2CM);
+	//echo vuelve a bajo (termino la medicion)
+	return (distance/US2CM);  //US2CM es el factor de escala para pasar de us a cm
 }
 
 uint16_t HcSr04ReadDistanceInInches(void){
@@ -85,7 +89,7 @@ uint16_t HcSr04ReadDistanceInInches(void){
 	while(GPIORead(echo_st));
 	return (distance/US2INCH);
 }
-
+//desinicializa los pines usados o limpieza del driver del sensor
 bool HcSr04Deinit(void){
 	GPIODeinit();
 	return true;

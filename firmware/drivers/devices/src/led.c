@@ -29,12 +29,12 @@
 /*==================[external functions definition]==========================*/
 
 uint8_t LedsInit(void){
-	/** Configuration of the GPIO */
+	/** Configuration of the GPIO comos salida */
 	GPIOInit(GPIO_LED1, GPIO_OUTPUT);
 	GPIOInit(GPIO_LED2, GPIO_OUTPUT);
 	GPIOInit(GPIO_LED3, GPIO_OUTPUT);
 
-	/** Turn off leds*/
+	/** Turn off leds al inicio*/
 	GPIOOff(GPIO_LED1);
 	GPIOOff(GPIO_LED2);
 	GPIOOff(GPIO_LED3);

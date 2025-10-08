@@ -35,7 +35,7 @@
 #include "switch.h"
 
 /*==================[macros and definitions]=================================*/
-#define CONFIG_BLINK_PERIOD 1000
+#define CONFIG_MUESTREO_PERIOD 1000 //DEFINE EL TIEMPO QUE SE ESPERA ENTRE MEDICIONES
 
 /*==================[internal data definition]===============================*/
 TaskHandle_t MedirDistancia_task_handle = NULL;
@@ -53,7 +53,7 @@ static void Teclas(void *pvParameter)
 {
     uint8_t teclas;
     while (true)
-    {
+    {   //lee el estado de las teclas
         teclas = SwitchesRead();
         switch (teclas)
         {
@@ -64,7 +64,7 @@ static void Teclas(void *pvParameter)
             hold = !hold; // cambio el estado de hold
             break;
         }
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
+        vTaskDelay(CONFIG_MUESTREO_PERIOD / portTICK_PERIOD_MS);
     }
 }
 
@@ -78,7 +78,8 @@ static void MedirDistancia(void *pvParameter)
             distancia_actual = HcSr04ReadDistanceInCentimeters();
           //  printf("Distancia: %d cm\r\n", distancia_actual);
         }
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
+        //Refresco de medicion cada 1 s
+        vTaskDelay(CONFIG_MUESTREO_PERIOD / portTICK_PERIOD_MS);
     }
 }
 
@@ -115,7 +116,7 @@ static void ControlarLed(void *pvParameter)
                 LedOn(LED_3);
             }
         }
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
+        vTaskDelay(CONFIG_MUESTREO_PERIOD / portTICK_PERIOD_MS);
     }
 }
 static void Display(void *pvParameter)
@@ -134,12 +135,12 @@ static void Display(void *pvParameter)
             } // si se activa hold mantengo el ultimo valor en el
         }
 
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
+        vTaskDelay(CONFIG_MUESTREO_PERIOD / portTICK_PERIOD_MS);
     }
 }
 /*==================[external functions definition]==========================*/
 void app_main(void)
-{ // Inicializaciones
+{ // Inicializaciones de periféricos
     LedsInit();
     SwitchesInit();
     LcdItsE0803Init();

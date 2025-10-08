@@ -17,7 +17,7 @@
 #include "freertos/queue.h"
 #include "esp_log.h"
 /*==================[macros and definitions]=================================*/
-#define UART_CONN_TX        GPIO_18         /*!<  */
+#define UART_CONN_TX        GPIO_18         /*!<  */  //define pines fisicos
 #define UART_CONN_RX        GPIO_19         /*!<  */
 #define TX_BUFFER_SIZE      256             /*!<  */
 #define RX_BUFFER_SIZE      256             /*!<  */

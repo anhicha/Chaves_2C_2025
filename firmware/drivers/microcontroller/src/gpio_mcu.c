@@ -10,24 +10,26 @@
  */
 
 /*==================[inclusions]=============================================*/
+//usa funciones basicas para de esp para hacer funciones mas amigables.
 #include "gpio_mcu.h"
 #include <stdint.h>
 #include "driver/gpio.h"
 #include "driver/gpio_filter.h"
 /*==================[macros and definitions]=================================*/
-#define GPIO_QTY 	24
+#define GPIO_QTY 	24  //Maxima cantidad de pines
 #define FILTER_QTY	8
 typedef struct{
 	uint64_t pin;				/*!< GPIO pin */
 	gpio_mode_t mode;			/*!< Input/Output mode */
 	gpio_pull_mode_t pull;		/*!< GPIO pull-up/pull-down resistor */
 	bool state;					/*!< GPIO output state */
-} digital_io_t;
+} digital_io_t; //cada pin GPIO tendra una instancia de esta estructua para almacenar su configuracion
 /*==================[internal data declaration]==============================*/
 
 /*==================[internal functions declaration]=========================*/
 
 /*==================[internal data definition]===============================*/
+//Inicializa la informacion de todos los pines que del driver.
 digital_io_t gpio_list[GPIO_QTY] = {
 	{GPIO_NUM_0, GPIO_MODE_DISABLE, GPIO_PULLUP_ONLY, false}, /* Configuration GPIO0*/
 	{GPIO_NUM_1, GPIO_MODE_DISABLE, GPIO_PULLUP_ONLY, false}, /* Configuration GPIO1*/

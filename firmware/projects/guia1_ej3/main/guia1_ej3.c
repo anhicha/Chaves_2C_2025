@@ -43,16 +43,17 @@ struct leds
     uint8_t mode;     // ON, OFF, TOGGLE
     uint8_t n_led;    // indica el número de led a controlar
     uint8_t n_ciclos; // indica la cantidad de ciclos de encendido/apagado
-    uint16_t periodo; // indica el tiempo de cada ciclo
+    uint16_t periodo; // indica el tiempo de cada ciclo en ms
 } my_leds;
 /*==================[internal functions declaration]=========================*/
 
 void controlarLed(struct leds *my_leds)
-{
+{   //verifica que el puntero no sea nulo
     if (my_leds == NULL)
         return;
 
     //  MODO ON
+    //se accede a los campos del struct con el puntero ->
     if (my_leds->mode == ON)
     {
         if (my_leds->n_led == 1)
@@ -113,17 +114,19 @@ void controlarLed(struct leds *my_leds)
 /*==================[external functions definition]==========================*/
 void app_main(void)
 {   
-    
+    //inicializacion de leds como salida
     LedsInit();
+
+    //creación de una variable del tipo struct leds y carga de los campos
     struct leds my_leds;
     my_leds.mode = TOGGLE; 
     my_leds.n_led = 2; 
     my_leds.n_ciclos = 10;
-    my_leds.periodo = 500; 
-    controlarLed(&my_leds);
+    my_leds.periodo = 500; //pausa de 500 ms entre cada toggle
+    controlarLed(&my_leds);//llama a la funcion pasandole la direccion de memoria de la variable
 
 
-
+    //no se usa
     SwitchesInit();
     while (1)
     {

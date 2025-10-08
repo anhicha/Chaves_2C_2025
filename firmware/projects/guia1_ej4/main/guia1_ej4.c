@@ -73,8 +73,8 @@ int8_t convertToBcdArray(uint32_t data, uint8_t digits, uint8_t *bcd_number) {
 
     // Extraer dígitos desde el final
     for (int8_t i = digits - 1; i >= 0; i--) {
-        bcd_number[i] = data % 10;
-        data /= 10;
+        bcd_number[i] = data % 10;   //guarda el digito menos significativo 
+        data /= 10; //elimina ese digito del numero original
     }
 
     return 0; // éxito
@@ -90,7 +90,8 @@ int8_t convertToBcdArray(uint32_t data, uint8_t digits, uint8_t *bcd_number) {
  */
 void writeBcdToGpio(uint8_t bcd_digit, gpioConf_t * map) {
     for (int i = 0; i < 4; i++) {
-        uint8_t bit = (bcd_digit >> i) & 0x01;   // extraigo bit i del dígito
+        //extraigo bit i del dígito 
+        uint8_t bit = (bcd_digit >> i) & 0x01;   // >>mueve el bit i a la posición 0, &0x01 lo aísla
         if (bit)
             GPIOOn(map[i].pin);   // pongo el GPIO en ‘1’
         else
@@ -111,6 +112,7 @@ void writeBcdToGpio(uint8_t bcd_digit, gpioConf_t * map) {
 
 void displayNumber(uint32_t number, uint8_t digits, gpioConf_t * bcd_map, gpioConf_t * digit_map) {
     uint8_t bcd[digits];
+    //convierto el número en un arreglo BCD
     convertToBcdArray(number, digits, bcd);
 
     for (int i = 0; i < digits; i++) {
@@ -118,10 +120,12 @@ void displayNumber(uint32_t number, uint8_t digits, gpioConf_t * bcd_map, gpioCo
         // Escribo el dígito BCD en los GPIOs
         writeBcdToGpio(bcd[i], bcd_map);
 
-        // Enciendo el dígito correspondiente
-        GPIOOn(digit_map[i].pin);
-        GPIOOff(digit_map[i].pin);
-     
+        // Enciendo el dígito correspondiente del display
+        //cada digito comparte los 4 pines BCD pero solo se enicende uno a la vez
+        //Multiplexado
+        GPIOOn(digit_map[i].pin); //enciendo el digito actual
+        GPIOOff(digit_map[i].pin);//apago el digito actual
+        //se hace rapidamente para que el ojo humano no lo note
     }
 }
 

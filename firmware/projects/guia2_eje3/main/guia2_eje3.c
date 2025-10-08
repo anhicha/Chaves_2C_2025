@@ -37,7 +37,7 @@
 #include "uart_mcu.h"
 
 /*==================[macros and definitions]=================================*/
-#define MEDICION_PERIOD_US 1000000 // 1 s
+#define MEDICION_PERIOD_US 1000000 // TIEMPO 1 s DEL TIMER
 
 /*==================[internal data definition]===============================*/
 TaskHandle_t MedirDistancia_task_handle = NULL;
@@ -78,11 +78,11 @@ void FuncTimer(void *param)
 }
 
 void FuncUart(void *param)
-{
+{  //replicar la funcionalidad de los botones fisicos a traves de comunicacion serie
     uint8_t dato;
     if (UartReadByte(UART_PC, &dato)) // leo dato recibido
     {
-        if (dato == 'O') // si es 'm' activo/desactivo medicion
+        if (dato == 'O') // si es 'o' activo/desactivo medicion
         {
             activar_medicion = !activar_medicion;
         }
@@ -188,11 +188,11 @@ void app_main(void)
 
     SwitchActivInt(SWITCH_1, Tecla1, NULL);
     SwitchActivInt(SWITCH_2, Tecla2, NULL);
-
+    //config UART
     serial_config_t my_uart = {
-        .port = UART_PC,
-        .baud_rate = 9600,
-        .func_p = FuncUart,
+        .port = UART_PC, //identifica el puerto UART que esta conectado a la pc
+        .baud_rate = 9600, //define la velocidad de comunicacion
+        .func_p = FuncUart, //interrupcion isr para el uart,
         .param_p = NULL};
     UartInit(&my_uart);
 

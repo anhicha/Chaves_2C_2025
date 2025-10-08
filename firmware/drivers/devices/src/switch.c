@@ -27,7 +27,7 @@
 
 /*==================[external functions definition]==========================*/
 int8_t SwitchesInit(void){
-	/* GPIO configurations */
+	/* GPIO configurations como entrada */
 	GPIOInit(GPIO_SWITCH1, GPIO_INPUT);	// SWITCH_1
 	GPIOInit(GPIO_SWITCH2, GPIO_INPUT);	// SWITCH_2
 	GPIOInputFilter(GPIO_SWITCH1);		
@@ -36,16 +36,21 @@ int8_t SwitchesInit(void){
 }
 
 int8_t SwitchesRead(void){
+	//estado de los interruptores 0000 0000 ,ningun boton presionado.
 	int8_t mask = 0;
+	//los botones estan en low cuando se presionan
 	if (!GPIORead(GPIO_SWITCH1))
+	//Or lógico para ir seteando los bits del mask, enciende el bit 0 de la mask
 		  mask |= SWITCH_1;
-	if (!GPIORead(GPIO_SWITCH2))
+	if (!GPIORead(GPIO_SWITCH2))  
+	//enciende el bit 1 de la mask (0010)
 		  mask |= SWITCH_2;
 	return mask;
 }
-
+//puntero a la funcion de interrupcion, argumentos opcionales
+//instala una alarma en el pin fisico gpio asociado a las teclas
 void SwitchActivInt(switch_t sw, void *ptr_int_func, void *args){
-	switch(sw){
+	switch(sw){ //identifica el switch
 		case SWITCH_1:
 			GPIOActivInt(GPIO_SWITCH1, ptr_int_func, false, args);
 		break;
