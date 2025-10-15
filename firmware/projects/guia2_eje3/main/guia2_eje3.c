@@ -77,6 +77,10 @@ void FuncTimer(void *param)
     vTaskNotifyGiveFromISR(Display_task_handle, pdFALSE);        // notifica a la tarea de display
 }
 
+/**
+ * @brief Interrupción UART: permite controlar el sistema desde la PC.
+ */
+
 void FuncUart(void *param)
 {  //replicar la funcionalidad de los botones fisicos a traves de comunicacion serie
     uint8_t dato;
@@ -114,6 +118,7 @@ static void MedirDistancia(void *pvParameter)
         } 
     }
 }
+
 /**
  * @brief Tarea que controla los LEDs según la distancia medida
  */
@@ -154,6 +159,7 @@ static void ControlarLed(void *pvParameter)
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
     }
 }
+
 /**
  * @brief Tarea que actualiza el LCD con la distancia
  */

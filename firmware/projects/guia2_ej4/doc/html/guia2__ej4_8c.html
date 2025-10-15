@@ -1,0 +1,398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Proyecto 2. ej4 EP: Referencia del archivo C:/Repositorios/Chaves_2C_2025/firmware/projects/guia2_ej4/main/guia2_ej4.c</title>
+<link rel="icon" href="icon.ico" type="image/x-icon" />
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="fiuner.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Proyecto 2. ej4 EP<span id="projectnumber">&#160;1.0</span>
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('guia2__ej4_8c.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referencia del archivo guia2_ej4.c</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &quot;freertos/FreeRTOS.h&quot;</code><br />
+<code>#include &quot;freertos/task.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="analog__io__mcu_8h_source.html">analog_io_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="timer__mcu_8h_source.html">timer_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="uart__mcu_8h_source.html">uart_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="gpio__mcu_8h_source.html">gpio_mcu.h</a>&quot;</code><br />
+</div>
+<p><a href="guia2__ej4_8c_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:adf141a8683480fa1607eb5af454ec764" id="r_adf141a8683480fa1607eb5af454ec764"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adf141a8683480fa1607eb5af454ec764">FREC_M</a>&#160;&#160;&#160;500</td></tr>
+<tr class="memitem:a8e62e41f3683652130e337638553bf53" id="r_a8e62e41f3683652130e337638553bf53"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e62e41f3683652130e337638553bf53">TIMER_PERIOD_US</a>&#160;&#160;&#160;(1000000 / <a class="el" href="#adf141a8683480fa1607eb5af454ec764">FREC_M</a>)</td></tr>
+<tr class="memitem:a6b20d41d6252e9871430c242cb1a56e7" id="r_a6b20d41d6252e9871430c242cb1a56e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>&#160;&#160;&#160;231</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:abf44f3b21baa0d5587980c717e79b82a" id="r_abf44f3b21baa0d5587980c717e79b82a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf44f3b21baa0d5587980c717e79b82a">TimerISR</a> (void *param)</td></tr>
+<tr class="memdesc:abf44f3b21baa0d5587980c717e79b82a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupción del timer cada 2 ms (500 Hz)  <br /></td></tr>
+<tr class="memitem:a4712c0875a96acc969fc9c9feb7ac910" id="r_a4712c0875a96acc969fc9c9feb7ac910"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4712c0875a96acc969fc9c9feb7ac910">DAC_task</a> (void *pvParameter)</td></tr>
+<tr class="memdesc:a4712c0875a96acc969fc9c9feb7ac910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea de generación de señal ECG por DAC.  <br /></td></tr>
+<tr class="memitem:ae6748a91137915c4c0eee4aa9c3565a5" id="r_ae6748a91137915c4c0eee4aa9c3565a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6748a91137915c4c0eee4aa9c3565a5">ADC_task</a> (void *pvParameter)</td></tr>
+<tr class="memdesc:ae6748a91137915c4c0eee4aa9c3565a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea que adquiere y envía la señal analógica por UART.  <br /></td></tr>
+<tr class="memitem:a630544a7f0a2cc40d8a7fefab7e2fe70" id="r_a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a630544a7f0a2cc40d8a7fefab7e2fe70">app_main</a> (void)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:af766dc321c1bd2f31037d384abca2288" id="r_af766dc321c1bd2f31037d384abca2288"><td class="memItemLeft" align="right" valign="top">volatile uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af766dc321c1bd2f31037d384abca2288">adc_value</a> = 0</td></tr>
+<tr class="memitem:a5c220143e40ff34a6540ecf043c8d6ed" id="r_a5c220143e40ff34a6540ecf043c8d6ed"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c220143e40ff34a6540ecf043c8d6ed">ADC_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="memitem:a992a1ba02f799a422155608afe855f71" id="r_a992a1ba02f799a422155608afe855f71"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a992a1ba02f799a422155608afe855f71">DAC_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="memitem:a2dafb8b8179af8e9f4cc4df3f588e42e" id="r_a2dafb8b8179af8e9f4cc4df3f588e42e"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dafb8b8179af8e9f4cc4df3f588e42e">ecg</a> [<a class="el" href="#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>]</td></tr>
+</table>
+<a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentación de «define»</h2>
+<a id="a6b20d41d6252e9871430c242cb1a56e7" name="a6b20d41d6252e9871430c242cb1a56e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b20d41d6252e9871430c242cb1a56e7">&#9670;&#160;</a></span>BUFFER_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BUFFER_SIZE&#160;&#160;&#160;231</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00042">42</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="guia2__ej4_8c_source.html#l00085">DAC_task()</a>.</p>
+
+</div>
+</div>
+<a id="adf141a8683480fa1607eb5af454ec764" name="adf141a8683480fa1607eb5af454ec764"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf141a8683480fa1607eb5af454ec764">&#9670;&#160;</a></span>FREC_M</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FREC_M&#160;&#160;&#160;500</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00040">40</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+</div>
+</div>
+<a id="a8e62e41f3683652130e337638553bf53" name="a8e62e41f3683652130e337638553bf53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e62e41f3683652130e337638553bf53">&#9670;&#160;</a></span>TIMER_PERIOD_US</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TIMER_PERIOD_US&#160;&#160;&#160;(1000000 / <a class="el" href="#adf141a8683480fa1607eb5af454ec764">FREC_M</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00041">41</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="guia2__ej4_8c_source.html#l00121">app_main()</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
+<a id="ae6748a91137915c4c0eee4aa9c3565a5" name="ae6748a91137915c4c0eee4aa9c3565a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6748a91137915c4c0eee4aa9c3565a5">&#9670;&#160;</a></span>ADC_task()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ADC_task </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>pvParameter</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea que adquiere y envía la señal analógica por UART. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00104">104</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="guia2__ej4_8c_source.html#l00045">adc_value</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00130">AnalogInputReadSingle()</a>, <a class="el" href="mpu6050_8c_source.html#l00021">buffer</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00032">CH1</a>, <a class="el" href="uart__mcu_8h_source.html#l00032">UART_PC</a> y <a class="el" href="uart__mcu_8c_source.html#l00193">UartSendString()</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="guia2__ej4_8c_source.html#l00121">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a630544a7f0a2cc40d8a7fefab7e2fe70" name="a630544a7f0a2cc40d8a7fefab7e2fe70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a630544a7f0a2cc40d8a7fefab7e2fe70">&#9670;&#160;</a></span>app_main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_main </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00121">121</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="analog__io__mcu_8h_source.html#l00038">ADC_SINGLE</a>, <a class="el" href="guia2__ej4_8c_source.html#l00104">ADC_task()</a>, <a class="el" href="guia2__ej4_8c_source.html#l00046">ADC_task_handle</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00045">AnalogInputInit()</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00120">AnalogOutputInit()</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00032">CH1</a>, <a class="el" href="guia2__ej4_8c_source.html#l00085">DAC_task()</a>, <a class="el" href="guia2__ej4_8c_source.html#l00047">DAC_task_handle</a>, <a class="el" href="ili9341_8c_source.html#l00019">NULL</a>, <a class="el" href="timer__mcu_8h_source.html#l00040">timer_config_t::timer</a>, <a class="el" href="timer__mcu_8h_source.html#l00032">TIMER_A</a>, <a class="el" href="guia2__ej4_8c_source.html#l00041">TIMER_PERIOD_US</a>, <a class="el" href="timer__mcu_8c_source.html#l00067">TimerInit()</a>, <a class="el" href="guia2__ej4_8c_source.html#l00076">TimerISR()</a>, <a class="el" href="timer__mcu_8c_source.html#l00116">TimerStart()</a>, <a class="el" href="uart__mcu_8h_source.html#l00026">UART_NO_INT</a>, <a class="el" href="uart__mcu_8h_source.html#l00032">UART_PC</a> y <a class="el" href="uart__mcu_8c_source.html#l00107">UartInit()</a>.</p>
+
+</div>
+</div>
+<a id="a4712c0875a96acc969fc9c9feb7ac910" name="a4712c0875a96acc969fc9c9feb7ac910"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4712c0875a96acc969fc9c9feb7ac910">&#9670;&#160;</a></span>DAC_task()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DAC_task </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>pvParameter</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea de generación de señal ECG por DAC. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00085">85</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="analog__io__mcu_8c_source.html#l00159">AnalogOutputWrite()</a>, <a class="el" href="guia2__ej4_8c_source.html#l00042">BUFFER_SIZE</a> y <a class="el" href="guia2__ej4_8c_source.html#l00050">ecg</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="guia2__ej4_8c_source.html#l00121">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="abf44f3b21baa0d5587980c717e79b82a" name="abf44f3b21baa0d5587980c717e79b82a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf44f3b21baa0d5587980c717e79b82a">&#9670;&#160;</a></span>TimerISR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TimerISR </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>param</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Interrupción del timer cada 2 ms (500 Hz) </p>
+<p>Esta ISR despierta las tareas de conversión DAC y adquisición ADC. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00076">76</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="guia2__ej4_8c_source.html#l00046">ADC_task_handle</a> y <a class="el" href="guia2__ej4_8c_source.html#l00047">DAC_task_handle</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="guia2__ej4_8c_source.html#l00121">app_main()</a>.</p>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Documentación de variables</h2>
+<a id="a5c220143e40ff34a6540ecf043c8d6ed" name="a5c220143e40ff34a6540ecf043c8d6ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c220143e40ff34a6540ecf043c8d6ed">&#9670;&#160;</a></span>ADC_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t ADC_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00046">46</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="guia2__ej4_8c_source.html#l00121">app_main()</a> y <a class="el" href="guia2__ej4_8c_source.html#l00076">TimerISR()</a>.</p>
+
+</div>
+</div>
+<a id="af766dc321c1bd2f31037d384abca2288" name="af766dc321c1bd2f31037d384abca2288"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af766dc321c1bd2f31037d384abca2288">&#9670;&#160;</a></span>adc_value</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint16_t adc_value = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00045">45</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="guia2__ej4_8c_source.html#l00104">ADC_task()</a>.</p>
+
+</div>
+</div>
+<a id="a992a1ba02f799a422155608afe855f71" name="a992a1ba02f799a422155608afe855f71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a992a1ba02f799a422155608afe855f71">&#9670;&#160;</a></span>DAC_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t DAC_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00047">47</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="guia2__ej4_8c_source.html#l00121">app_main()</a> y <a class="el" href="guia2__ej4_8c_source.html#l00076">TimerISR()</a>.</p>
+
+</div>
+</div>
+<a id="a2dafb8b8179af8e9f4cc4df3f588e42e" name="a2dafb8b8179af8e9f4cc4df3f588e42e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dafb8b8179af8e9f4cc4df3f588e42e">&#9670;&#160;</a></span>ecg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char ecg[<a class="el" href="#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    76, 77, 78, 77, 79, 86, 81, 76, 84, 93, 85, 80,</div>
+<div class="line">    89, 95, 89, 85, 93, 98, 94, 88, 98, 105, 96, 91,</div>
+<div class="line">    99, 105, 101, 96, 102, 106, 101, 96, 100, 107, 101,</div>
+<div class="line">    94, 100, 104, 100, 91, 99, 103, 98, 91, 96, 105, 95,</div>
+<div class="line">    88, 95, 100, 94, 85, 93, 99, 92, 84, 91, 96, 87, 80,</div>
+<div class="line">    83, 92, 86, 78, 84, 89, 79, 73, 81, 83, 78, 70, 80, 82,</div>
+<div class="line">    79, 69, 80, 82, 81, 70, 75, 81, 77, 74, 79, 83, 82, 72,</div>
+<div class="line">    80, 87, 79, 76, 85, 95, 87, 81, 88, 93, 88, 84, 87, 94,</div>
+<div class="line">    86, 82, 85, 94, 85, 82, 85, 95, 86, 83, 92, 99, 91, 88,</div>
+<div class="line">    94, 98, 95, 90, 97, 105, 104, 94, 98, 114, 117, 124, 144,</div>
+<div class="line">    180, 210, 236, 253, 227, 171, 99, 49, 34, 29, 43, 69, 89,</div>
+<div class="line">    89, 90, 98, 107, 104, 98, 104, 110, 102, 98, 103, 111, 101,</div>
+<div class="line">    94, 103, 108, 102, 95, 97, 106, 100, 92, 101, 103, 100, 94, 98,</div>
+<div class="line">    103, 96, 90, 98, 103, 97, 90, 99, 104, 95, 90, 99, 104, 100, 93,</div>
+<div class="line">    100, 106, 101, 93, 101, 105, 103, 96, 105, 112, 105, 99, 103, 108,</div>
+<div class="line">    99, 96, 102, 106, 99, 90, 92, 100, 87, 80, 82, 88, 77, 69, 75, 79,</div>
+<div class="line">    74, 67, 71, 78, 72, 67, 73, 81, 77, 71, 75, 84, 79, 77, 77, 76, 76,</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p class="definition">Definición en la línea <a class="el" href="guia2__ej4_8c_source.html#l00050">50</a> del archivo <a class="el" href="guia2__ej4_8c_source.html">guia2_ej4.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="guia2__ej4_8c_source.html#l00085">DAC_task()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d9edf6c004b4a7ff14fe9ae7a92214ee.html">firmware</a></li><li class="navelem"><a href="dir_429d80758da54da73083af4edd40d0b3.html">projects</a></li><li class="navelem"><a href="dir_2da467b29f1a142190d1444452b645d1.html">guia2_ej4</a></li><li class="navelem"><a href="dir_6e3681f944d513a3247087c385364f37.html">main</a></li><li class="navelem"><a href="guia2__ej4_8c.html">guia2_ej4.c</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

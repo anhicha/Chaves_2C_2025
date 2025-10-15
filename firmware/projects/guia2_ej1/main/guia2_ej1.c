@@ -2,7 +2,18 @@
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
+ * Este programa mide la distancia utilizando el sensor ultrasónico.  
+ * Muestra el valor medido en el display LCD y controla tres LEDs 
+ * según el rango de distancia detectado.  
+ *
+ * El sistema utiliza cuatro tareas bajo FreeRTOS:  
+ * - Lectura de las teclas (para activar medición o mantener el último valor).  
+ * - Medición de distancia.  
+ * - Control de los LEDs según el rango de distancia.  
+ * - Actualización del display LCD.  
+ *
+ * La sincronización entre tareas se realiza mediante retardos periódicos (polling)
+ * definidos por `CONFIG_MUESTREO_PERIOD`.
  *
  * <a href="https://drive.google.com/...">Operation Example</a>
  *
@@ -35,6 +46,8 @@
 #include "switch.h"
 
 /*==================[macros and definitions]=================================*/
+ /**< Tiempo entre mediciones (ms) */
+
 #define CONFIG_MUESTREO_PERIOD 1000 //DEFINE EL TIEMPO QUE SE ESPERA ENTRE MEDICIONES
 
 /*==================[internal data definition]===============================*/
@@ -49,6 +62,12 @@ volatile uint16_t distancia_actual = 0; // ditancia medida en cm
 
 /*==================[internal functions declaration]=========================*/
 
+/**
+ * @brief Tarea encargada de leer las teclas del sistema.
+ *
+ * SWITCH_1 activa o desactiva la medición.
+ * SWITCH_2 activa o desactiva el modo HOLD.
+ */
 static void Teclas(void *pvParameter)
 {
     uint8_t teclas;
@@ -68,6 +87,9 @@ static void Teclas(void *pvParameter)
     }
 }
 
+/**
+ * @brief Tarea que mide la distancia con el sensor HC-SR04.
+ */
 static void MedirDistancia(void *pvParameter)
 {
 
@@ -83,6 +105,9 @@ static void MedirDistancia(void *pvParameter)
     }
 }
 
+/**
+ * @brief Tarea que controla los LEDs según el rango de distancia medido.
+ */
 static void ControlarLed(void *pvParameter)
 {
     while (true)
@@ -119,6 +144,10 @@ static void ControlarLed(void *pvParameter)
         vTaskDelay(CONFIG_MUESTREO_PERIOD / portTICK_PERIOD_MS);
     }
 }
+
+/**
+ * @brief Tarea que muestra la distancia en el display LCD.
+ */
 static void Display(void *pvParameter)
 {
     while (true)

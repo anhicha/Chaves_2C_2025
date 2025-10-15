@@ -4,6 +4,11 @@
  *
  * Este programa mide distancia con un sensor HC-SR04 y muestra el resultado en un LCD
  * y con LEDs, utilizando interrupciones para teclas y temporizador.
+ * A diferencia del modo *polling*, en esta versión se utilizan **interrupciones**:
+ * - Las teclas generan interrupciones para activar/desactivar la medición y el modo HOLD.  
+ * - Un temporizador genera interrupciones periódicas para despertar las tareas principales.  
+ *
+ * Esto optimiza el uso de CPU y mejora la respuesta del sistema.
  *
  * @section hardConn Hardware Connection
  *
@@ -36,6 +41,7 @@
 #include "gpio_mcu.h"
 
 /*==================[macros and definitions]=================================*/
+/**< Periodo del temporizador (1 s) */
 #define MEDICION_PERIOD_US 1000000 // TIEMPO 1 s DEL TIMER
 /*==================[internal data definition]===============================*/
 TaskHandle_t MedirDistancia_task_handle = NULL;
